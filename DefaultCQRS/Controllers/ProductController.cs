@@ -8,8 +8,8 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Caching.Distributed;
 using System.Security.Principal;
+using System.Collections.Generic;
 using AlJawad.SqlDynamicLinker.Models;
-//using MassTransit.Mediator;
 
 namespace DefaultCQRS.Controllers
 {
@@ -19,13 +19,9 @@ namespace DefaultCQRS.Controllers
         {
         }
 
-        public override List<ColumnBase> IncludePropertiesForDetails => [];
-
-        public override List<ColumnBase> IncludePropertiesForListing => [];
-
-        public override List<ColumnBase> IncludePropertiesForManage => [];
-
-        public override List<ColumnBase> SearchPropertiesForSearchByName => [];
-
+        public override List<ColumnBase> IncludePropertiesForManage => new List<ColumnBase>();
+        public override List<ColumnBase> IncludePropertiesForDetails => new List<ColumnBase>();
+        public override List<ColumnBase> IncludePropertiesForListing => new List<ColumnBase>();
+        public override List<ColumnBase> SearchPropertiesForSearchByName => new List<ColumnBase>();
     }
 }
