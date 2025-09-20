@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35514.174 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DefaultCQRS", "DefaultCQRS\DefaultCQRS.csproj", "{A2D07840-2B02-43AE-AC04-28DAFA0AABEC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{629AA3EE-C25C-4F5B-80D8-1DE2DA80D257}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Applications", "{3C267CC9-0918-4047-8D06-F651DC0AB6B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlJawad.DefaultCQRS", "AlJawad.DefaultCQRS\AlJawad.DefaultCQRS.csproj", "{BB74460D-9367-4822-9DFF-C4586A309A73}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A2D07840-2B02-43AE-AC04-28DAFA0AABEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2D07840-2B02-43AE-AC04-28DAFA0AABEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2D07840-2B02-43AE-AC04-28DAFA0AABEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2D07840-2B02-43AE-AC04-28DAFA0AABEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB74460D-9367-4822-9DFF-C4586A309A73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB74460D-9367-4822-9DFF-C4586A309A73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB74460D-9367-4822-9DFF-C4586A309A73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB74460D-9367-4822-9DFF-C4586A309A73}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A2D07840-2B02-43AE-AC04-28DAFA0AABEC} = {3C267CC9-0918-4047-8D06-F651DC0AB6B9}
+		{BB74460D-9367-4822-9DFF-C4586A309A73} = {629AA3EE-C25C-4F5B-80D8-1DE2DA80D257}
+	EndGlobalSection
+EndGlobal
