@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AlJawad.DefaultCQRS.Entities
+namespace AlJawad.DefaultCQRS.Models
 {
     public class CreateResult
     {

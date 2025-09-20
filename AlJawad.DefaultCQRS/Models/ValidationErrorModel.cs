@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AlJawad.DefaultCQRS.Entities
+namespace AlJawad.DefaultCQRS.Models
 {
     public class ValidationErrorModel
     {

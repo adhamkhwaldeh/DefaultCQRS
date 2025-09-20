@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 
-namespace AlJawad.DefaultCQRS.Entities
+namespace AlJawad.DefaultCQRS.Models
 {
     public class ErrorModel
     {

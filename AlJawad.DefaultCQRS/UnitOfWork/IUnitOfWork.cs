@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using AlJawad.DefaultCQRS.Entities;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using AlJawad.DefaultCQRS.Models;
 
 namespace AlJawad.DefaultCQRS.UnitOfWork
 {

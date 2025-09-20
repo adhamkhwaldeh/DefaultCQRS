@@ -8,6 +8,8 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Caching.Distributed;
 using System.Security.Principal;
+using AlJawad.SqlDynamicLinker.Models;
+//using MassTransit.Mediator;
 
 namespace DefaultCQRS.Controllers
 {
@@ -16,5 +18,14 @@ namespace DefaultCQRS.Controllers
         public ProductController(IMediator mediator, IDistributedCache appCache, IPrincipal httpContextAccessor, IAuthorizationService service, IMapper mapper) : base(mediator, appCache, httpContextAccessor, service, mapper)
         {
         }
+
+        public override List<ColumnBase> IncludePropertiesForDetails => [];
+
+        public override List<ColumnBase> IncludePropertiesForListing => [];
+
+        public override List<ColumnBase> IncludePropertiesForManage => [];
+
+        public override List<ColumnBase> SearchPropertiesForSearchByName => [];
+
     }
 }
