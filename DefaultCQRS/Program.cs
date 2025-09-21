@@ -5,6 +5,10 @@ using System.Reflection;
 
 using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
+using AlJawad.DefaultCQRS.Extensions;
+using DefaultCQRS.Entities;
+using DefaultCQRS.DTOs;
+using DefaultCQRS.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +18,14 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GeneralHandlerInitializer).Assembly));
+
+// Register the dynamic CQRS handlers for the Product entity
+builder.Services.AddEntityDynamicConfiguration<Product, int, CreateProductDto, UpdateProductDto, ProductDto, ProductAuthorizationHandler>(builder.Configuration, options =>
+{
+    // Example of overriding a handler:
+    // options.CreateCommandHandler = typeof(MyCustomCreateProductCommandHandler);
+});
+
 builder.Services.AddControllers();
 builder.Services.AddRazorPages();
 
