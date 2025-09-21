@@ -5,6 +5,7 @@ using System.Reflection;
 
 using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,7 +25,7 @@ builder.Services.AddApiVersioning(options =>
     options.ReportApiVersions = true;
 });
 
-using Microsoft.OpenApi.Models;
+
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -56,11 +57,11 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
-builder.Services.AddVersionedApiExplorer(options =>
-{
-    options.GroupNameFormat = "'v'VVV";
-    options.SubstituteApiVersionInUrl = true;
-});
+//builder.Services.AddVersionedApiExplorer(options =>
+//{
+//    options.GroupNameFormat = "'v'VVV";
+//    options.SubstituteApiVersionInUrl = true;
+//});
 
 var app = builder.Build();
 
@@ -78,11 +79,11 @@ app.UseHttpsRedirection();
 app.UseSwagger();
 app.UseSwaggerUI(options =>
 {
-    var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
-    foreach (var description in provider.ApiVersionDescriptions)
-    {
-        options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
-    }
+    //var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+    //foreach (var description in provider.ApiVersionDescriptions)
+    //{
+    //    options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
+    //}
 });
 
 app.UseRouting();

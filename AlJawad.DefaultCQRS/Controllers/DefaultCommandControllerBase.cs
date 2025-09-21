@@ -28,11 +28,12 @@ using ProperMan.Infrastructure.Extensions;
 
 namespace AlJawad.DefaultCQRS.Controllers
 {
-    [Produces("application/json")]
+
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
+    [Produces("application/json")]
     [ApiController]
-    [ProducesResponseType(500, Type = typeof(ExceptionDto))]
+    //[ProducesResponseType(500, Type = typeof(ExceptionDto))]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public abstract class DefaultCommandControllerBase<TKey,TEntity,TDtoModel,TCreateModel, TReadModel, TUpdateModel> :
         CommandControllerBase<TKey, TDtoModel, TCreateModel, TReadModel, TUpdateModel>
