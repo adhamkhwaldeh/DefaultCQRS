@@ -1,5 +1,4 @@
-﻿//using Asp.Versioning;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Caching.Distributed;
@@ -11,14 +10,6 @@ using Microsoft.Extensions.Options;
 
 namespace AlJawad.DefaultCQRS.Controllers
 {
-    //[Produces("application/json")]
-    //[ApiVersion("1.0")]
-    //[Route("api/v{version:apiVersion}/[controller]")]
-    //[ApiController]
-    //[ProducesResponseType(500, Type = typeof(ExceptionDto))]
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    
-    //public abstract class BaseController : ControllerBase
      public abstract class BaseController :  Controller
      {
         public IDistributedCache AppCache { get; set; }

@@ -18,19 +18,18 @@ using System.Linq;
 using Microsoft.AspNetCore.Http;
 using AlJawad.DefaultCQRS.CQRS.Permissions;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-using Asp.Versioning;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using AlJawad.SqlDynamicLinker.Models;
 using Swashbuckle.AspNetCore.Filters;
 using AlJawad.SqlDynamicLinker.Swagger;
 using AlJawad.DefaultCQRS.Models.Responses;
-using ProperMan.Infrastructure.Extensions;
 
 namespace AlJawad.DefaultCQRS.Controllers
 {
 
-    [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
+    //[ApiVersion("1.0")]
+    //[Route("api/v{version:apiVersion}/[controller]")]
+    [Route("api/[controller]")]
     [Produces("application/json")]
     [ApiController]
     //[ProducesResponseType(500, Type = typeof(ExceptionDto))]

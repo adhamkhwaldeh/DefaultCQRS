@@ -5,12 +5,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 //TODO need to be checked
-//using ProperMan.Infrastructure.Contexts;
+//using AlJawad.DefaultCQRS.Contexts;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProperMan.Infrastructure.Extensions
+namespace AlJawad.DefaultCQRS.Extensions
 {
     public static class ResultExtensions
     {

@@ -17,16 +17,16 @@ namespace AlJawad.DefaultCQRS.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static void AddEntityDynamicConfiguration<TEntityModel, TKeyModel, TCreateModel, TUpdateModel, TReadModel, TmpAuthorizationHandler>(this IServiceCollection services, IConfiguration Configuration, Action<EntityHandlersConfiguration> options = null)
+        public static void AddEntityDynamicConfiguration<TEntityModel, TKeyModel, TCreateModel, TUpdateModel, TReadModel, TmpAuthorizationHandler>(this IServiceCollection services, IConfiguration Configuration, Action<EntityHandlersConfiguration<TEntityModel, TKeyModel, TCreateModel, TUpdateModel, TReadModel>> options = null)
              where TEntityModel : class, IHaveIdentifier<TKeyModel>, new()
              where TReadModel : class
              where TmpAuthorizationHandler : AuthorizationHandler<BaseRequirement<TEntityModel, TKeyModel>>
         {
 
-            var handlersConfiguration = new EntityHandlersConfiguration();
+            var handlersConfiguration = new EntityHandlersConfiguration<TEntityModel, TKeyModel, TCreateModel, TUpdateModel, TReadModel>();
             options?.Invoke(handlersConfiguration);
 
-            #region App services Scope and Transient
+            #region DI Scope and Transient
 
             var createCommandHandler = handlersConfiguration.CreateCommandHandler ?? typeof(EntityCreateCommandHandler<IUnitOfWork, TEntityModel, TKeyModel, TCreateModel, TReadModel>);
             services.AddTransient(typeof(IRequestHandler<EntityCreateCommand<TCreateModel, Response<TReadModel>>, Response<TReadModel>>), createCommandHandler);

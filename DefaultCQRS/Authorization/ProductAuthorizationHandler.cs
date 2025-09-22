@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace DefaultCQRS.Authorization
 {
-    public class ProductAuthorizationHandler : AuthorizationHandler<BaseRequirement<Product, int>>
+    public class ProductAuthorizationHandler : AuthorizationHandler<BaseRequirement<Product, long>>
     {
-        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, BaseRequirement<Product, int> requirement)
+        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, BaseRequirement<Product, long> requirement)
         {
             // For demonstration purposes, we'll just succeed.
             // In a real application, you would implement your authorization logic here.
