@@ -13,7 +13,8 @@
   </ItemGroup>
 
 	<ItemGroup>
-
+		<None Include="README.md" Pack="true" PackagePath="" />
+		
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.0" />
 
 		<PackageReference Include="DataTables.AspNetCore.Mvc" Version="1.4.2" />
@@ -44,4 +45,19 @@
     <Folder Include="UnitOfWork\" />
   </ItemGroup>
 
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<!-- or netstandard2.1, etc. -->
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageId>AlJawad.DefaultCQRS</PackageId>
+		<Version>1.0.1</Version>
+		<Authors>Adham al khawada</Authors>
+		<Company>Adham al khawalda</Company>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<Description>A powerful and scalable CQRS library for .NET applications.</Description>
+		<PackageTags>csharp;dotnet;library</PackageTags>
+		<RepositoryUrl>https://github.com/adhamkhwaldeh/DefaultCQRS</RepositoryUrl>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	</PropertyGroup>
+	
 </Project>
