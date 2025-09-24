@@ -224,7 +224,11 @@ Once you've created your custom handler, you need to configure it in your `Progr
 
 ```csharp
 builder.Services.AddEntityDynamicConfiguration<Category, int, CreateCategoryDto, UpdateCategoryDto, CategoryDto, CategoryAuthorizationHandler>(builder.Configuration)
-    .WithCreateHandler<CategoryCreateCommandHandler>();
+    .WithCreateHandler<CategoryCreateCommandHandler>()
+	.SkipUpdateValidator(false);//TO skip the validation 
 ```
+
+
+
 - [Contributing](#contributing)
 - [License](#license)
