@@ -31,7 +31,7 @@ namespace AlJawad.DefaultCQRS.Extensions
             var createCommandHandler = handlersConfiguration.CreateCommandHandler ?? typeof(EntityCreateCommandHandler<IUnitOfWork, TEntityModel, TKeyModel, TCreateModel, TReadModel>);
             services.AddTransient(typeof(IRequestHandler<EntityCreateCommand<TCreateModel, Response<TReadModel>>, Response<TReadModel>>), createCommandHandler);
 
-            var createCommandValidator = handlersConfiguration.CreateCommandValidator ?? typeof(ValidateEntityModelCommandBehavior<TCreateModel, TReadModel>);
+            var createCommandValidator = handlersConfiguration.CreateCommandValidator ?? typeof(ValidateEntityModelCommandBehavior<TCreateModel,TReadModel>);
             services.AddTransient(typeof(IPipelineBehavior<EntityCreateCommand<TCreateModel, Response<TReadModel>>, Response<TReadModel>>), createCommandValidator);
 
             var updateCommandHandler = handlersConfiguration.UpdateCommandHandler ?? typeof(EntityUpdateCommandHandler<IUnitOfWork, TEntityModel, TKeyModel, TUpdateModel, TReadModel>);

@@ -15,7 +15,7 @@ using AlJawad.DefaultCQRS.Extensions;
 namespace AlJawad.DefaultCQRS.CQRS.Behaviors
 {
     public abstract class BaseValidator<T, TEntity, TKey, TReadEntity> : AbstractValidator<T>
-         where TEntity :class,IBaseEntity
+         where TEntity :class,IHaveIdentifier<TKey>
          where TReadEntity : class
     {
         protected readonly IDistributedCache Cache;

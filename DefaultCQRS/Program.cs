@@ -14,6 +14,11 @@ using DefaultCQRS.UnitOfWork;
 using System.Security.Claims;
 using AlJawad.DefaultCQRS.UnitOfWork;
 using System.Security.Principal;
+using AlJawad.SqlDynamicLinker.ModelBinder;
+using AutoMapper;
+using DefaultCQRS.Validators;
+using FluentValidation;
+//using AlJawad.DefaultCQRS.ModelBinder;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,8 +27,19 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GeneralHandlerInitializer).Assembly));
+var assembly = typeof(Program).Assembly;
+builder.Services.AddMediatR(new MediatRServiceConfiguration().RegisterServicesFromAssembly(assembly));
 
+
+builder.Services.AddScoped<IUnitOfWork,UnitOfWork<AppDbContext>>();
+//builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
+
+//#region required for Default CQRS
+// Register controllers
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+
+//builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GeneralHandlerInitializer).Assembly));
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ClaimsPrincipal>(sp =>
@@ -32,11 +48,21 @@ builder.Services.AddScoped<ClaimsPrincipal>(sp =>
 builder.Services.AddScoped<IPrincipal>(sp =>
     sp.GetRequiredService<IHttpContextAccessor>().HttpContext.User);
 
+builder.Services.AddControllers().AddJsonOptions(
+                x =>
+                {
+                    x.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+                    //x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                })
+     .AddNewtonsoftJson(options =>
+     {
+         // Handle cycles safely (optional)
+         options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+         options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+     }).ConfigureApiBehaviorOptions(options => { options.SuppressModelStateInvalidFilter = true; });
 
-
-builder.Services.AddScoped<IUnitOfWork,UnitOfWork<AppDbContext>>();
-//builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
-
+builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
+builder.Services.InitializeDefaultCQRS();
 
 // Register the dynamic CQRS handlers for the Product entity
 builder.Services.AddEntityDynamicConfiguration<Product, long, CreateProductDto, UpdateProductDto, ProductDto, ProductAuthorizationHandler>(
@@ -44,7 +70,10 @@ builder.Services.AddEntityDynamicConfiguration<Product, long, CreateProductDto, 
 {
     // Example of overriding a handler:
     // options.CreateCommandHandler = typeof(MyCustomCreateProductCommandHandler);
+    //options.WithCreateValidator<ProductCreateValidator>()
+    //.WithUpdateValidator<ProductUpdateValidator>();
 });
+//#endregion
 
 builder.Services.AddControllers();
 builder.Services.AddRazorPages();
@@ -95,6 +124,9 @@ builder.Services.AddSwaggerGen(c =>
 //});
 
 var app = builder.Build();
+
+var mapper = app.Services.GetRequiredService<IMapper>();
+ResultExtensions.Configur(mapper);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

@@ -1,6 +1,8 @@
+using AlJawad.DefaultCQRS.Interfaces;
+
 namespace DefaultCQRS.DTOs
 {
-    public class ProductDto
+    public class ProductDto:IHaveIdentifier<long>
     {
         public long Id { get; set; }
         public string Name { get; set; }

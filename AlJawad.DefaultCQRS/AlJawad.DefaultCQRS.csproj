@@ -27,8 +27,8 @@
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 
 		<PackageReference Include="AutoMapper" Version="13.0.1" />
-		
-		<PackageReference Include="AlJawad.SqlDynamicLinker" Version="1.0.3" />
+
+		<PackageReference Include="AlJawad.SqlDynamicLinker" Version="1.0.4" />
 
 		<!--<PackageReference Include="DataTables.AspNet.AspNetCore" Version="2.0.6" />-->
 
@@ -38,7 +38,6 @@
   <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="Interfaces\" />
-    <Folder Include="Extensions\" />
     <Folder Include="Enums\" />
     <Folder Include="Helpers\" />
     <Folder Include="Caching\" />

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AlJawad.DefaultCQRS.Extensions
 {
@@ -47,7 +48,8 @@ namespace AlJawad.DefaultCQRS.Extensions
             {
                 var response = new ResponseArray<TDto>
                 {
-                    Data = _mapper.Map<IEnumerable<TDto>>(model.Data//, x => x.Options(_autoOptions)
+                    Data = _mapper.Map<IEnumerable<TDto>>((model.Data != null) ? model.Data : []
+                    //, x => x.Options(_autoOptions)
                                                                            ),
                     Status = model.Status
                 };
@@ -74,7 +76,7 @@ namespace AlJawad.DefaultCQRS.Extensions
                     PageCount = model.PageCount,
                     PageSize = model.PageSize,
                     Total = model.Total,
-                    Data = _mapper.Map<IEnumerable<TDto>>(model.Data//, x => x.Options(_autoOptions)
+                    Data = _mapper.Map<IEnumerable<TDto>>((model.Data != null) ? model.Data : []//, x => x.Options(_autoOptions)
                     )
                 };
                 return new JsonResult(response);
@@ -90,7 +92,7 @@ namespace AlJawad.DefaultCQRS.Extensions
             {
                 var response = new ResponseArray<TDto>
                 {
-                    Data = _mapper.Map<IEnumerable<TDto>>(model.Data//, x => x.Options(_autoOptions)
+                    Data = _mapper.Map<IEnumerable<TDto>>((model.Data != null) ? model.Data : []//, x => x.Options(_autoOptions)
                                                                     ),
                     Status = model.Status
                 };
