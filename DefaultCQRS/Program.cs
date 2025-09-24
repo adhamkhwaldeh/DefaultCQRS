@@ -73,6 +73,13 @@ builder.Services.AddEntityDynamicConfiguration<Product, long, CreateProductDto, 
     //options.WithCreateValidator<ProductCreateValidator>()
     //.WithUpdateValidator<ProductUpdateValidator>();
 });
+
+builder.Services.AddEntityDynamicConfiguration<Category, long, CreateCategoryDto, UpdateCategoryDto, CategoryDto, CategoryAuthorizationHandler>(
+    builder.Configuration, options =>
+{
+    options.CreateCommandHandler = typeof(DefaultCQRS.Handlers.CreateCategoryHandler);
+    options.WithCreateValidator<CreateCategoryValidator>();
+});
 //#endregion
 
 builder.Services.AddControllers();
