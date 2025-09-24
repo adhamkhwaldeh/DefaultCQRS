@@ -13,11 +13,11 @@ using Microsoft.Extensions.Caching.Distributed;
 
 namespace DefaultCQRS.Handlers
 {
-    public class CreateCategoryHandler : EntityCreateCommandHandler<UnitOfWork<AppDbContext>, Category, long, CreateCategoryDto, CategoryDto>
+    public class CreateCategoryHandler : EntityCreateCommandHandler<IUnitOfWork, Category, long, CreateCategoryDto, CategoryDto>
     {
 
         public CreateCategoryHandler(ILoggerFactory loggerFactory,
-         UnitOfWork<AppDbContext> dataContext,
+         IUnitOfWork dataContext,
          IMapper mapper,
          IHttpContextAccessor context,
          IDistributedCache cache,

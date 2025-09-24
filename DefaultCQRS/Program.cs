@@ -66,7 +66,7 @@ builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 builder.Services.InitializeDefaultCQRS();
 
 // Register the dynamic CQRS handlers for the Product entity
-builder.Services.AddEntityDynamicConfiguration<UnitOfWork<AppDbContext>,Product, long, CreateProductDto, UpdateProductDto, ProductDto, ProductAuthorizationHandler>(
+builder.Services.AddEntityDynamicConfiguration<Product, long, CreateProductDto, UpdateProductDto, ProductDto, ProductAuthorizationHandler>(
     builder.Configuration, options =>
 {
     // Example of overriding a handler:
@@ -75,10 +75,10 @@ builder.Services.AddEntityDynamicConfiguration<UnitOfWork<AppDbContext>,Product,
     //.WithUpdateValidator<ProductUpdateValidator>();
 });
 
-builder.Services.AddEntityDynamicConfiguration<UnitOfWork<AppDbContext>, Category, long, CreateCategoryDto, UpdateCategoryDto, CategoryDto, CategoryAuthorizationHandler>(
+builder.Services.AddEntityDynamicConfiguration<Category, long, CreateCategoryDto, UpdateCategoryDto, CategoryDto, CategoryAuthorizationHandler>(
     builder.Configuration, options =>
 {
-    options.WithCreateHandler<CreateCategoryHandler>();
+    //options.WithCreateHandler<CreateCategoryHandler>();
 });
 //#endregion
 

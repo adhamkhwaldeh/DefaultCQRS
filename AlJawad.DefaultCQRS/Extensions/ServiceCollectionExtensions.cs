@@ -17,19 +17,18 @@ namespace AlJawad.DefaultCQRS.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static void AddEntityDynamicConfiguration<TUnitOfWork, TEntityModel, TKeyModel, TCreateModel, TUpdateModel, TReadModel, TmpAuthorizationHandler>(this IServiceCollection services, IConfiguration Configuration, Action<EntityHandlersConfiguration<TUnitOfWork, TEntityModel, TKeyModel, TCreateModel, TUpdateModel, TReadModel>> options = null)
+        public static void AddEntityDynamicConfiguration<TEntityModel, TKeyModel, TCreateModel, TUpdateModel, TReadModel, TmpAuthorizationHandler>(this IServiceCollection services, IConfiguration Configuration, Action<EntityHandlersConfiguration< TEntityModel, TKeyModel, TCreateModel, TUpdateModel, TReadModel>> options = null)
              where TEntityModel : class, IHaveIdentifier<TKeyModel>, new()
              where TReadModel : class
              where TmpAuthorizationHandler : AuthorizationHandler<BaseRequirement<TEntityModel, TKeyModel>>
-             where TUnitOfWork :IUnitOfWork
         {
 
-            var handlersConfiguration = new EntityHandlersConfiguration<TUnitOfWork, TEntityModel, TKeyModel, TCreateModel, TUpdateModel, TReadModel>();
+            var handlersConfiguration = new EntityHandlersConfiguration< TEntityModel, TKeyModel, TCreateModel, TUpdateModel, TReadModel>();
             options?.Invoke(handlersConfiguration);
 
             #region DI Scope and Transient
 
-            var createCommandHandler = handlersConfiguration.CreateCommandHandler ?? typeof(EntityCreateCommandHandler<TUnitOfWork, TEntityModel, TKeyModel, TCreateModel, TReadModel>);
+            var createCommandHandler = handlersConfiguration.CreateCommandHandler ?? typeof(EntityCreateCommandHandler<IUnitOfWork, TEntityModel, TKeyModel, TCreateModel, TReadModel>);
             services.AddTransient(typeof(IRequestHandler<EntityCreateCommand<TCreateModel, Response<TReadModel>>, Response<TReadModel>>), createCommandHandler);
 
             if (handlersConfiguration.SkipCreateCommandValidator)
@@ -37,7 +36,7 @@ namespace AlJawad.DefaultCQRS.Extensions
                 services.AddTransient(typeof(IPipelineBehavior<EntityCreateCommand<TCreateModel, Response<TReadModel>>, Response<TReadModel>>), typeof(ValidateEntityModelCommandBehavior<TCreateModel, TReadModel>));
             }
 
-            var updateCommandHandler = handlersConfiguration.UpdateCommandHandler ?? typeof(EntityUpdateCommandHandler<TUnitOfWork, TEntityModel, TKeyModel, TUpdateModel, TReadModel>);
+            var updateCommandHandler = handlersConfiguration.UpdateCommandHandler ?? typeof(EntityUpdateCommandHandler<IUnitOfWork, TEntityModel, TKeyModel, TUpdateModel, TReadModel>);
             services.AddTransient(typeof(IRequestHandler<EntityUpdateCommand<TKeyModel, TUpdateModel, Response<TReadModel>>, Response<TReadModel>>), updateCommandHandler);
 
             if (handlersConfiguration.SkipUpdateCommandValidator)
@@ -45,19 +44,19 @@ namespace AlJawad.DefaultCQRS.Extensions
                 services.AddTransient(typeof(IPipelineBehavior<EntityUpdateCommand<TKeyModel, TUpdateModel, Response<TReadModel>>, Response<TReadModel>>), typeof(ValidateEntityModelCommandBehavior<TUpdateModel, TReadModel>));
             }
 
-            var deleteCommandHandler = handlersConfiguration.DeleteCommandHandler ?? typeof(EntityDeleteCommandHandler<TUnitOfWork, TEntityModel, TKeyModel, TReadModel>);
+            var deleteCommandHandler = handlersConfiguration.DeleteCommandHandler ?? typeof(EntityDeleteCommandHandler<IUnitOfWork, TEntityModel, TKeyModel, TReadModel>);
             services.AddTransient(typeof(IRequestHandler<EntityDeleteCommand<TKeyModel, Response<TReadModel>>, Response<TReadModel>>), deleteCommandHandler);
 
             var authorizationHandler = handlersConfiguration.AuthorizationHandler ?? typeof(TmpAuthorizationHandler);
             services.AddTransient(typeof(IAuthorizationHandler), authorizationHandler);
 
-            var identifierQueryHandler = handlersConfiguration.IdentifierQueryHandler ?? typeof(EntityIdentifierQueryHandler<TUnitOfWork, TEntityModel, TKeyModel, TReadModel>);
+            var identifierQueryHandler = handlersConfiguration.IdentifierQueryHandler ?? typeof(EntityIdentifierQueryHandler<IUnitOfWork, TEntityModel, TKeyModel, TReadModel>);
             services.AddScoped(typeof(IRequestHandler<EntityIdentifierQuery<TKeyModel, Response<TReadModel>>, Response<TReadModel>>), identifierQueryHandler);
 
-            var listQueryHandler = handlersConfiguration.ListQueryHandler ?? typeof(EntityListQueryHandler<TUnitOfWork, TEntityModel, TReadModel>);
+            var listQueryHandler = handlersConfiguration.ListQueryHandler ?? typeof(EntityListQueryHandler<IUnitOfWork, TEntityModel, TReadModel>);
             services.AddScoped(typeof(IRequestHandler<EntityListQuery<ResponseArray<TReadModel>>, ResponseArray<TReadModel>>), listQueryHandler);
 
-            var pagedQueryHandler = handlersConfiguration.PagedQueryHandler ?? typeof(EntityPagedQueryHandler<TUnitOfWork, TEntityModel, TReadModel>);
+            var pagedQueryHandler = handlersConfiguration.PagedQueryHandler ?? typeof(EntityPagedQueryHandler<IUnitOfWork, TEntityModel, TReadModel>);
             services.AddScoped(typeof(IRequestHandler<EntityPagedQuery<ResponseList<TReadModel>>, ResponseList<TReadModel>>), pagedQueryHandler);
             #endregion
         }
