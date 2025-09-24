@@ -9,6 +9,7 @@ namespace AlJawad.DefaultCQRS.CQRS
 {
 
     public class EntityHandlersConfiguration<
+        TUnitOfWork,
     TEntityModel,
     TKeyModel,
     TCreateModel,
@@ -16,6 +17,7 @@ namespace AlJawad.DefaultCQRS.CQRS
     TReadModel>
         where TEntityModel : class, IHaveIdentifier<TKeyModel>, new()
         where TReadModel : class
+        where TUnitOfWork:IUnitOfWork
     {
         public Type? CreateCommandHandler { get; private set; }
         public bool SkipCreateCommandValidator { get; private set; } = false;
@@ -33,16 +35,16 @@ namespace AlJawad.DefaultCQRS.CQRS
 
         // --- Handlers with compile-time constraints ---
 
-        public EntityHandlersConfiguration<TEntityModel, TKeyModel, TCreateModel, TUpdateModel, TReadModel>
+        public EntityHandlersConfiguration<TUnitOfWork,TEntityModel, TKeyModel, TCreateModel, TUpdateModel, TReadModel>
             WithCreateHandler<THandler>()
 
-            where  THandler : EntityCreateCommandHandler<IUnitOfWork, TEntityModel, TKeyModel, TCreateModel, TReadModel>
+            where  THandler : EntityCreateCommandHandler<TUnitOfWork, TEntityModel, TKeyModel, TCreateModel, TReadModel>
         {
             CreateCommandHandler = typeof(THandler);
             return this;
         }
 
-        public EntityHandlersConfiguration<TEntityModel, TKeyModel, TCreateModel, TUpdateModel, TReadModel>
+        public EntityHandlersConfiguration<TUnitOfWork, TEntityModel, TKeyModel, TCreateModel, TUpdateModel, TReadModel>
             WithUpdateHandler<THandler>()
             where THandler : EntityUpdateCommandHandler<IUnitOfWork, TEntityModel, TKeyModel, TUpdateModel, TReadModel>
         {
@@ -50,7 +52,7 @@ namespace AlJawad.DefaultCQRS.CQRS
             return this;
         }
 
-        public EntityHandlersConfiguration<TEntityModel, TKeyModel, TCreateModel, TUpdateModel, TReadModel>
+        public EntityHandlersConfiguration<TUnitOfWork, TEntityModel, TKeyModel, TCreateModel, TUpdateModel, TReadModel>
             WithDeleteHandler<THandler>()
             where THandler : EntityDeleteCommandHandler<IUnitOfWork, TEntityModel, TKeyModel,TReadModel>
         {
@@ -58,7 +60,7 @@ namespace AlJawad.DefaultCQRS.CQRS
             return this;
         }
 
-        public EntityHandlersConfiguration<TEntityModel, TKeyModel, TCreateModel, TUpdateModel, TReadModel>
+        public EntityHandlersConfiguration<TUnitOfWork, TEntityModel, TKeyModel, TCreateModel, TUpdateModel, TReadModel>
             WithAuthorizationHandler<THandler>()
             where THandler : AuthorizationHandler<BaseRequirement<TEntityModel, TKeyModel>>
         {
@@ -66,7 +68,7 @@ namespace AlJawad.DefaultCQRS.CQRS
             return this;
         }
 
-        public EntityHandlersConfiguration<TEntityModel, TKeyModel, TCreateModel, TUpdateModel, TReadModel>
+        public EntityHandlersConfiguration<TUnitOfWork, TEntityModel, TKeyModel, TCreateModel, TUpdateModel, TReadModel>
             WithIdentifierQueryHandler<THandler>()
             where THandler : EntityIdentifierQueryHandler<IUnitOfWork,TEntityModel, TKeyModel, TReadModel>
         {
@@ -74,7 +76,7 @@ namespace AlJawad.DefaultCQRS.CQRS
             return this;
         }
 
-        public EntityHandlersConfiguration<TEntityModel, TKeyModel, TCreateModel, TUpdateModel, TReadModel>
+        public EntityHandlersConfiguration<TUnitOfWork, TEntityModel, TKeyModel, TCreateModel, TUpdateModel, TReadModel>
             WithListQueryHandler<THandler>()
             where THandler : EntityListQueryHandler<IUnitOfWork, TEntityModel, TReadModel>
         {
@@ -82,7 +84,7 @@ namespace AlJawad.DefaultCQRS.CQRS
             return this;
         }
 
-        public EntityHandlersConfiguration<TEntityModel, TKeyModel, TCreateModel, TUpdateModel, TReadModel>
+        public EntityHandlersConfiguration<TUnitOfWork, TEntityModel, TKeyModel, TCreateModel, TUpdateModel, TReadModel>
             WithPagedQueryHandler<THandler>()
             where THandler : EntityPagedQueryHandler<IUnitOfWork,TEntityModel, TReadModel>
         {
@@ -92,14 +94,14 @@ namespace AlJawad.DefaultCQRS.CQRS
 
         // --- Validators (you can constrain them to FluentValidation AbstractValidator<T> if needed) ---
 
-        public EntityHandlersConfiguration<TEntityModel, TKeyModel, TCreateModel, TUpdateModel, TReadModel>
+        public EntityHandlersConfiguration<TUnitOfWork, TEntityModel, TKeyModel, TCreateModel, TUpdateModel, TReadModel>
             WithCreateValidator(bool skip)
         {
             SkipCreateCommandValidator = skip;
             return this;
         }
 
-        public EntityHandlersConfiguration<TEntityModel, TKeyModel, TCreateModel, TUpdateModel, TReadModel>
+        public EntityHandlersConfiguration<TUnitOfWork, TEntityModel, TKeyModel, TCreateModel, TUpdateModel, TReadModel>
             WithUpdateValidator(bool skip)
         {
             SkipUpdateCommandValidator = skip;

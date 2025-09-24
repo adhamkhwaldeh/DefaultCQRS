@@ -18,6 +18,7 @@ using AlJawad.SqlDynamicLinker.ModelBinder;
 using AutoMapper;
 using DefaultCQRS.Validators;
 using FluentValidation;
+using DefaultCQRS.Handlers;
 //using AlJawad.DefaultCQRS.ModelBinder;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -65,7 +66,7 @@ builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 builder.Services.InitializeDefaultCQRS();
 
 // Register the dynamic CQRS handlers for the Product entity
-builder.Services.AddEntityDynamicConfiguration<Product, long, CreateProductDto, UpdateProductDto, ProductDto, ProductAuthorizationHandler>(
+builder.Services.AddEntityDynamicConfiguration<UnitOfWork<AppDbContext>,Product, long, CreateProductDto, UpdateProductDto, ProductDto, ProductAuthorizationHandler>(
     builder.Configuration, options =>
 {
     // Example of overriding a handler:
@@ -74,11 +75,10 @@ builder.Services.AddEntityDynamicConfiguration<Product, long, CreateProductDto, 
     //.WithUpdateValidator<ProductUpdateValidator>();
 });
 
-builder.Services.AddEntityDynamicConfiguration<Category, long, CreateCategoryDto, UpdateCategoryDto, CategoryDto, CategoryAuthorizationHandler>(
+builder.Services.AddEntityDynamicConfiguration<UnitOfWork<AppDbContext>, Category, long, CreateCategoryDto, UpdateCategoryDto, CategoryDto, CategoryAuthorizationHandler>(
     builder.Configuration, options =>
 {
-    options.CreateCommandHandler = typeof(DefaultCQRS.Handlers.CreateCategoryHandler);
-    options.WithCreateValidator<CreateCategoryValidator>();
+    options.WithCreateHandler<CreateCategoryHandler>();
 });
 //#endregion
 
