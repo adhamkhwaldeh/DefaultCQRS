@@ -93,14 +93,14 @@ namespace AlJawad.DefaultCQRS.CQRS
         // --- Validators (you can constrain them to FluentValidation AbstractValidator<T> if needed) ---
 
         public EntityHandlersConfiguration< TEntityModel, TKeyModel, TCreateModel, TUpdateModel, TReadModel>
-            WithCreateValidator(bool skip)
+            SkipCreateValidator(bool skip)
         {
             SkipCreateCommandValidator = skip;
             return this;
         }
 
         public EntityHandlersConfiguration< TEntityModel, TKeyModel, TCreateModel, TUpdateModel, TReadModel>
-            WithUpdateValidator(bool skip)
+            SkipUpdateValidator(bool skip)
         {
             SkipUpdateCommandValidator = skip;
             return this;
