@@ -18,17 +18,15 @@ namespace DefaultCQRS.UnitOfWork
         protected readonly T DbContext;
         private IDbContextTransaction _transaction;
         private IsolationLevel? _isolationLevel;
-        private readonly IPrincipal _httpContextAccessor;
 
         //private Claim User;
 
 
         private IEnumerable<EntityEntry> Entries => DbContext.ChangeTracker.Entries();
 
-        public UnitOfWork(T context, IPrincipal httpContextAccessor)
+        public UnitOfWork(T context)
         {
             DbContext = context ?? throw new ArgumentNullException(nameof(context));
-            _httpContextAccessor = httpContextAccessor;
         }
         public void BeginTransaction() => NewTransactionIfNeeded();
         public void CommitTransaction()

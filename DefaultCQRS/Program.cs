@@ -11,6 +11,9 @@ using DefaultCQRS.Entities;
 using DefaultCQRS.DTOs;
 using DefaultCQRS.Authorization;
 using DefaultCQRS.UnitOfWork;
+using System.Security.Claims;
+using AlJawad.DefaultCQRS.UnitOfWork;
+using System.Security.Principal;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +24,19 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GeneralHandlerInitializer).Assembly));
 
-builder.Services.AddScoped<UnitOfWork<AppDbContext>>();
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ClaimsPrincipal>(sp =>
+    sp.GetRequiredService<IHttpContextAccessor>().HttpContext.User);
+
+builder.Services.AddScoped<IPrincipal>(sp =>
+    sp.GetRequiredService<IHttpContextAccessor>().HttpContext.User);
+
+
+
+builder.Services.AddScoped<IUnitOfWork,UnitOfWork<AppDbContext>>();
+//builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
+
 
 // Register the dynamic CQRS handlers for the Product entity
 builder.Services.AddEntityDynamicConfiguration<Product, long, CreateProductDto, UpdateProductDto, ProductDto, ProductAuthorizationHandler>(

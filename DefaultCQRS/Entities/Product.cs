@@ -1,4 +1,3 @@
-using AlJawad.DefaultCQRS.Entities;
 
 namespace DefaultCQRS.Entities
 {

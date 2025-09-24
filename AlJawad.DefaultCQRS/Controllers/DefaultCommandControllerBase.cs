@@ -32,8 +32,8 @@ namespace AlJawad.DefaultCQRS.Controllers
     [Route("api/[controller]")]
     [Produces("application/json")]
     [ApiController]
-    //[ProducesResponseType(500, Type = typeof(ExceptionDto))]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [ProducesResponseType(500, Type = typeof(ExceptionDto))]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public abstract class DefaultCommandControllerBase<TKey,TEntity,TDtoModel,TCreateModel, TReadModel, TUpdateModel> :
         CommandControllerBase<TKey, TDtoModel, TCreateModel, TReadModel, TUpdateModel>
     {

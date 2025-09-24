@@ -4,7 +4,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AlJawad.DefaultCQRS.Entities
+namespace DefaultCQRS.Entities
 {
     public abstract class BaseEntity :IHaveIdentifier<long>, IBaseEntity, IGenCode
     {

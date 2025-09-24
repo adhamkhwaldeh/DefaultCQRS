@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using AlJawad.DefaultCQRS.Entities;
 using AlJawad.DefaultCQRS.Caching;
 using AlJawad.DefaultCQRS.Interfaces;
 using System.Threading.Tasks;
