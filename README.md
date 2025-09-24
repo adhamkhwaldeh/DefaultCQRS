@@ -190,5 +190,41 @@ public class ProductCreateValidator : BaseValidator<CreateProductDto, Product, l
 ### Unit of Work
 
 The library uses the Unit of Work pattern to ensure that all database operations within a single command are transactional. The `UnitOfWork` class is automatically registered with the dependency injection container and can be injected into your command handlers.
+
+### Custom Handlers
+
+If you need to implement custom logic for a specific command, you can create your own handler by inheriting from one of the default handler classes. For example, to create a custom handler for the `EntityCreateCommand`, you would create a class that inherits from `EntityCreateCommandHandler`.
+
+Here's an example of a custom handler for creating a `Category` entity:
+
+```csharp
+public class CategoryCreateCommandHandler : EntityCreateCommandHandler<IUnitOfWork, Category, int, CreateCategoryDto, CategoryDto>
+{
+    public CategoryCreateCommandHandler(ILoggerFactory loggerFactory,
+        IUnitOfWork dataContext,
+        IMapper mapper,
+        IHttpContextAccessor context,
+        IDistributedCache cache,
+        IServiceProvider provider)
+        : base(loggerFactory, dataContext, mapper, context, cache, provider)
+    {
+    }
+
+    protected override async Task<Response<CategoryDto>> ProcessAsync(EntityCreateCommand<CreateCategoryDto, Response<CategoryDto>> request, CancellationToken cancellationToken)
+    {
+        // Implement your custom logic here.
+        // For example, you can add additional validation, logging, or other business logic.
+
+        return await base.ProcessAsync(request, cancellationToken);
+    }
+}
+```
+
+Once you've created your custom handler, you need to configure it in your `Program.cs` file using the `WithCreateHandler` method:
+
+```csharp
+builder.Services.AddEntityDynamicConfiguration<Category, int, CreateCategoryDto, UpdateCategoryDto, CategoryDto, CategoryAuthorizationHandler>(builder.Configuration)
+    .WithCreateHandler<CategoryCreateCommandHandler>();
+```
 - [Contributing](#contributing)
 - [License](#license)
