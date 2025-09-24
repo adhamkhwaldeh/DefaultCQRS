@@ -78,7 +78,7 @@ builder.Services.AddEntityDynamicConfiguration<Product, long, CreateProductDto, 
 builder.Services.AddEntityDynamicConfiguration<Category, long, CreateCategoryDto, UpdateCategoryDto, CategoryDto, CategoryAuthorizationHandler>(
     builder.Configuration, options =>
 {
-    //options.WithCreateHandler<CreateCategoryHandler>();
+    options.WithCreateHandler<CreateCategoryHandler>();
 });
 //#endregion
 
