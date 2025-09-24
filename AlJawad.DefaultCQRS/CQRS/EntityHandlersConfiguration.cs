@@ -18,10 +18,10 @@ namespace AlJawad.DefaultCQRS.CQRS
         where TReadModel : class
     {
         public Type? CreateCommandHandler { get; private set; }
-        public Type? CreateCommandValidator { get; private set; }
+        public bool SkipCreateCommandValidator { get; private set; } = false;
 
         public Type? UpdateCommandHandler { get; private set; }
-        public Type? UpdateCommandValidator { get; private set; }
+        public bool SkipUpdateCommandValidator { get; private set; } = false;
 
         public Type? DeleteCommandHandler { get; private set; }
 
@@ -93,16 +93,16 @@ namespace AlJawad.DefaultCQRS.CQRS
         // --- Validators (you can constrain them to FluentValidation AbstractValidator<T> if needed) ---
 
         public EntityHandlersConfiguration<TEntityModel, TKeyModel, TCreateModel, TUpdateModel, TReadModel>
-            WithCreateValidator<TValidator>()
+            WithCreateValidator(bool skip)
         {
-            CreateCommandValidator = typeof(TValidator);
+            SkipCreateCommandValidator = skip;
             return this;
         }
 
         public EntityHandlersConfiguration<TEntityModel, TKeyModel, TCreateModel, TUpdateModel, TReadModel>
-            WithUpdateValidator<TValidator>()
+            WithUpdateValidator(bool skip)
         {
-            UpdateCommandValidator = typeof(TValidator);
+            SkipUpdateCommandValidator = skip;
             return this;
         }
     }

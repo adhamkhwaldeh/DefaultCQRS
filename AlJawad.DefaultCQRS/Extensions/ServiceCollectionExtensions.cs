@@ -31,14 +31,18 @@ namespace AlJawad.DefaultCQRS.Extensions
             var createCommandHandler = handlersConfiguration.CreateCommandHandler ?? typeof(EntityCreateCommandHandler<IUnitOfWork, TEntityModel, TKeyModel, TCreateModel, TReadModel>);
             services.AddTransient(typeof(IRequestHandler<EntityCreateCommand<TCreateModel, Response<TReadModel>>, Response<TReadModel>>), createCommandHandler);
 
-            var createCommandValidator = handlersConfiguration.CreateCommandValidator ?? typeof(ValidateEntityModelCommandBehavior<TCreateModel,TReadModel>);
-            services.AddTransient(typeof(IPipelineBehavior<EntityCreateCommand<TCreateModel, Response<TReadModel>>, Response<TReadModel>>), createCommandValidator);
+            if (handlersConfiguration.SkipCreateCommandValidator)
+            {
+                services.AddTransient(typeof(IPipelineBehavior<EntityCreateCommand<TCreateModel, Response<TReadModel>>, Response<TReadModel>>), typeof(ValidateEntityModelCommandBehavior<TCreateModel, TReadModel>));
+            }
 
             var updateCommandHandler = handlersConfiguration.UpdateCommandHandler ?? typeof(EntityUpdateCommandHandler<IUnitOfWork, TEntityModel, TKeyModel, TUpdateModel, TReadModel>);
             services.AddTransient(typeof(IRequestHandler<EntityUpdateCommand<TKeyModel, TUpdateModel, Response<TReadModel>>, Response<TReadModel>>), updateCommandHandler);
 
-            var updateCommandValidator = handlersConfiguration.UpdateCommandValidator ?? typeof(ValidateEntityModelCommandBehavior<TUpdateModel, TReadModel>);
-            services.AddTransient(typeof(IPipelineBehavior<EntityUpdateCommand<TKeyModel, TUpdateModel, Response<TReadModel>>, Response<TReadModel>>), updateCommandValidator);
+            if (handlersConfiguration.SkipUpdateCommandValidator)
+            {
+                services.AddTransient(typeof(IPipelineBehavior<EntityUpdateCommand<TKeyModel, TUpdateModel, Response<TReadModel>>, Response<TReadModel>>), typeof(ValidateEntityModelCommandBehavior<TUpdateModel, TReadModel>));
+            }
 
             var deleteCommandHandler = handlersConfiguration.DeleteCommandHandler ?? typeof(EntityDeleteCommandHandler<IUnitOfWork, TEntityModel, TKeyModel, TReadModel>);
             services.AddTransient(typeof(IRequestHandler<EntityDeleteCommand<TKeyModel, Response<TReadModel>>, Response<TReadModel>>), deleteCommandHandler);
