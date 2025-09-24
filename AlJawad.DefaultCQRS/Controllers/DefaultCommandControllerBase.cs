@@ -29,7 +29,7 @@ namespace AlJawad.DefaultCQRS.Controllers
 
     //[ApiVersion("1.0")]
     //[Route("api/v{version:apiVersion}/[controller]")]
-    [Route("api/[controller]")]
+    //[Route("api/[controller]")]
     [Produces("application/json")]
     [ApiController]
     [ProducesResponseType(500, Type = typeof(ExceptionDto))]
