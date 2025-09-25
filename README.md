@@ -11,6 +11,7 @@ A powerful and scalable CQRS library for .NET applications.
 - [Usage](#usage)
   - [Commands](#commands)
   - [Queries](#queries)
+  - [Default Controllers](#default-controllers)
 - [Advanced Topics](#advanced-topics)
   - [Validation](#validation)
   - [Unit of Work](#unit-of-work)
@@ -151,6 +152,35 @@ To retrieve a paged list of entities, you can send an `EntityPagedQuery`.
 var query = new EntityPagedQuery<ResponseList<ProductDto>>(pageNumber, pageSize);
 var response = await _mediator.Send(query);
 ```
+
+### Default Controllers
+
+To simplify development and reduce boilerplate code, the library provides a `DefaultCommandControllerBase`. By inheriting from this controller, you can instantly expose a comprehensive set of API endpoints for your entity.
+
+By using `DefaultCommandControllerBase`, the following functionalities will be listed by default:
+
+- **Get by ID**: Retrieve a single entity by its primary key.
+- **Get a List**: Fetch a list of all entities.
+- **Get a Paged List**: Retrieve a paginated list of entities.
+- **Create**: Add a new entity.
+- **Update**: Modify an existing entity.
+- **Delete**: Remove an entity.
+- **Disable**: Mark an entity as disabled.
+
+This approach saves you from writing repetitive code for standard CRUD operations, allowing you to focus on your application's unique business logic.
+
+#### Other Base Controllers
+
+The library also includes other base controllers that provide more granular control over your API endpoints. These controllers are part of the inheritance hierarchy that `DefaultCommandControllerBase` is built upon.
+
+-   **`BaseController`**: This is the most basic controller, providing access to essential services like `IMediator`, `IDistributedCache`, and `IAuthorizationService`.
+
+-   **`QueryControllerBase`**: Inherits from `BaseController` and introduces foundational methods for read operations, such as `Find`, `PagedQuery`, and `ListQuery`.
+
+-   **`CommandControllerBase`**: Inherits from `QueryControllerBase` and adds methods for write operations, including `Create`, `Update`, `Delete`, and `Disable`.
+
+-   **`CommandCrudControllerBase`**: Inherits from `CommandControllerBase` and integrates with the `DataTables.AspNetCore.Mvc.Binder` library. This controller is designed to simplify server-side processing for DataTables, making it easier to build rich, interactive tables in your UI.
+
 - [Advanced Topics](#advanced-topics)
   - [Validation](#validation)
   - [Unit of Work](#unit-of-work)
