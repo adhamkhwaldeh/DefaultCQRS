@@ -29,7 +29,7 @@
 
 		<PackageReference Include="AutoMapper" Version="13.0.1" />
 
-		<PackageReference Include="AlJawad.SqlDynamicLinker" Version="1.0.4" />
+		<PackageReference Include="AlJawad.SqlDynamicLinker" Version="1.0.5" />
 
 		<!--<PackageReference Include="DataTables.AspNet.AspNetCore" Version="2.0.6" />-->
 
@@ -45,12 +45,18 @@
     <Folder Include="UnitOfWork\" />
   </ItemGroup>
 
+  <!--<ItemGroup>
+    <Reference Include="AlJawad.SqlDynamicLinker">
+      <HintPath>..\..\..\109-DynamicLinker\SqlDynamicLinker\AlJawad.SqlDynamicLinker\bin\Debug\net9.0\AlJawad.SqlDynamicLinker.dll</HintPath>
+    </Reference>
+  </ItemGroup>-->
+
 	<PropertyGroup>
 		<TargetFramework>net9.0</TargetFramework>
 		<!-- or netstandard2.1, etc. -->
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<PackageId>AlJawad.DefaultCQRS</PackageId>
-		<Version>1.0.2</Version>
+		<Version>1.0.3</Version>
 		<Authors>Adham al khawada</Authors>
 		<Company>Adham al khawalda</Company>
 		<PackageReadmeFile>README.md</PackageReadmeFile>

@@ -24,7 +24,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.0" />
 	<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
 
-	  <PackageReference Include="AlJawad.SqlDynamicLinker" Version="1.0.4" />
+	  <PackageReference Include="AlJawad.SqlDynamicLinker" Version="1.0.5" />
   </ItemGroup>
 	
 	<ItemGroup>
