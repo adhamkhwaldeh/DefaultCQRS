@@ -14,6 +14,7 @@
 
 	<ItemGroup>
 		<None Include="README.md" Pack="true" PackagePath="" />
+		<PackageReference Include="AlJawad.SqlDynamicLinker" Version="1.0.7" />
 		
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.0" />
 
@@ -28,8 +29,6 @@
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 
 		<PackageReference Include="AutoMapper" Version="13.0.1" />
-
-		<PackageReference Include="AlJawad.SqlDynamicLinker" Version="1.0.5" />
 
 		<!--<PackageReference Include="DataTables.AspNet.AspNetCore" Version="2.0.6" />-->
 
@@ -56,7 +55,7 @@
 		<!-- or netstandard2.1, etc. -->
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<PackageId>AlJawad.DefaultCQRS</PackageId>
-		<Version>1.0.3</Version>
+		<Version>1.0.6</Version>
 		<Authors>Adham al khawada</Authors>
 		<Company>Adham al khawalda</Company>
 		<PackageReadmeFile>README.md</PackageReadmeFile>

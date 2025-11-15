@@ -32,9 +32,9 @@ namespace AlJawad.DefaultCQRS.Controllers
             return result;
         }
 
-        protected virtual async Task<ActionResult<int>> GetCount(BaseQueryableFilter baseFilter, CancellationToken cancellationToken = default(CancellationToken))
+        protected virtual async Task<Response<int>> GetCount(BaseQueryableFilter baseFilter, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var command = new GetCountQuery<ActionResult<int>>(User, baseFilter);
+            var command = new EntityCountQuery<Response<int>>(User, baseFilter);
             var result = await Mediator.Send(command, cancellationToken).ConfigureAwait(false);
             return result;
         }

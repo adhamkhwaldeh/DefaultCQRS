@@ -3,16 +3,16 @@ using System.Security.Principal;
 
 namespace AlJawad.DefaultCQRS.CQRS.Queries
 {
-    public class GetCountQuery<TReadModel> : PrincipalQueryBase<TReadModel>
+    public class EntityCountQuery<TReadModel> : PrincipalQueryBase<TReadModel>
     {
         public BaseQueryableFilter Filter { get; set; }
 
-        public GetCountQuery(IPrincipal principal)
+        public EntityCountQuery(IPrincipal principal)
             : base(principal)
         {
         }
 
-        public GetCountQuery(IPrincipal principal, BaseQueryableFilter filter)
+        public EntityCountQuery(IPrincipal principal, BaseQueryableFilter filter)
             : base(principal)
         {
             this.Filter = filter;

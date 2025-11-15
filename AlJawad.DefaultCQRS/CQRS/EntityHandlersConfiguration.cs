@@ -28,6 +28,7 @@ namespace AlJawad.DefaultCQRS.CQRS
         public Type? AuthorizationHandler { get; private set; }
 
         public Type? IdentifierQueryHandler { get; private set; }
+        public Type? CountQueryHandler { get; private set; }
         public Type? ListQueryHandler { get; private set; }
         public Type? PagedQueryHandler { get; private set; }
 
@@ -71,6 +72,15 @@ namespace AlJawad.DefaultCQRS.CQRS
             where THandler : EntityIdentifierQueryHandler<IUnitOfWork,TEntityModel, TKeyModel, TReadModel>
         {
             IdentifierQueryHandler = typeof(THandler);
+            return this;
+        }
+
+        
+       public EntityHandlersConfiguration<TEntityModel, TKeyModel, TCreateModel, TUpdateModel, TReadModel>
+            WithCountQueryHandler<THandler>()
+            where THandler : EntityCountQueryHandler<IUnitOfWork, TEntityModel>
+        {
+            CountQueryHandler = typeof(THandler);
             return this;
         }
 

@@ -25,18 +25,19 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AlJawad.DefaultCQRS.CQRS.Handlers
 {
-    public class GetCountQueryHandler<TUnitOfWork, TEntity>
-        : DataContextHandlerBase<TUnitOfWork, GetCountQuery<ActionResult<int>>, ActionResult<int>>
+    public class EntityCountQueryHandler<TUnitOfWork, TEntity>
+        : DataContextHandlerBase<TUnitOfWork, EntityCountQuery<Response<int>>, Response<int>>
         where TEntity : class
         where TUnitOfWork : IUnitOfWork
     {
-        public GetCountQueryHandler(ILoggerFactory loggerFactory, TUnitOfWork dataContext, IMapper mapper)
+        public EntityCountQueryHandler(ILoggerFactory loggerFactory, TUnitOfWork dataContext, IMapper mapper)
             : base(loggerFactory, dataContext, mapper)
         {
         }
 
-        protected override async Task<ActionResult<int>> ProcessAsync(GetCountQuery<ActionResult<int>> request, CancellationToken cancellationToken)
+        protected override async Task<Response<int>> ProcessAsync(EntityCountQuery<Response<int>> request, CancellationToken cancellationToken)
         {
+            var entityResponse = new Response<int>();
             try
             {
                 var query = DataContext.Set<TEntity>().AsQueryable();
@@ -45,12 +46,19 @@ namespace AlJawad.DefaultCQRS.CQRS.Handlers
                     query = query.Filter(request.Filter);
                 }
                 var count = await query.CountAsync(cancellationToken).ConfigureAwait(false);
-                return new OkObjectResult(count);
+                entityResponse.StatusCode = StatusCodes.Status200OK;
+                entityResponse.ReturnStatus = true;
+                entityResponse.Data = count;
+                return entityResponse;
             }
             catch (Exception ex)
             {
-                return new BadRequestObjectResult(ex.Message);
+                entityResponse.StatusCode = StatusCodes.Status404NotFound;
+                entityResponse.ReturnMessage.Add(String.Format("Unable to Get Record from {0}" + 
+                    ex.Message, typeof(TEntity).Name));
+                entityResponse.ReturnStatus = false;
             }
+            return entityResponse;
         }
     }
 }

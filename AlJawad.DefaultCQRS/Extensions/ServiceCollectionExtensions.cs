@@ -53,6 +53,9 @@ namespace AlJawad.DefaultCQRS.Extensions
             var identifierQueryHandler = handlersConfiguration.IdentifierQueryHandler ?? typeof(EntityIdentifierQueryHandler<IUnitOfWork, TEntityModel, TKeyModel, TReadModel>);
             services.AddScoped(typeof(IRequestHandler<EntityIdentifierQuery<TKeyModel, Response<TReadModel>>, Response<TReadModel>>), identifierQueryHandler);
 
+            var countQueryHandler = handlersConfiguration.CountQueryHandler ?? typeof(EntityCountQueryHandler<IUnitOfWork, TEntityModel>);
+            services.AddScoped(typeof(IRequestHandler<EntityCountQuery<Response<int>>, Response<int>>), countQueryHandler);
+
             var listQueryHandler = handlersConfiguration.ListQueryHandler ?? typeof(EntityListQueryHandler<IUnitOfWork, TEntityModel, TReadModel>);
             services.AddScoped(typeof(IRequestHandler<EntityListQuery<ResponseArray<TReadModel>>, ResponseArray<TReadModel>>), listQueryHandler);
 

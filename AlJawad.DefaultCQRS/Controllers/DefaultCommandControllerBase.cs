@@ -66,14 +66,14 @@ namespace AlJawad.DefaultCQRS.Controllers
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet("Count")]
-        public virtual async Task<ActionResult<int>> GetCountAsync([FromQuery] BaseQueryableFilter baseFilter, CancellationToken cancellationToken)
+        public virtual async Task<ActionResult<Response<int>>> GetCountAsync([FromQuery] BaseQueryableFilter baseFilter, CancellationToken cancellationToken)
         {
             var auth = await AuthorizationService.AuthorizeAsync(User, null, new BaseRequirement<TEntity, TKey>(BaseRequirementActions.ViewListAction)).ConfigureAwait(false);
             if (auth.Succeeded)
             {
                 baseFilter.DynamicFilters = MergeSearchAndDefaultFilter(baseFilter.DynamicFilters, baseFilter.Query);
                 var result = await GetCount(baseFilter, cancellationToken);
-                return result;
+                return result.AsActionResult();
             }
             return new ChallengeResult();
         }
