@@ -12,6 +12,7 @@ using System.Linq.Dynamic.Core;
 using System.Linq.Dynamic;
 using AlJawad.SqlDynamicLinker.DynamicFilter;
 using AlJawad.DefaultCQRS.Models.Responses;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AlJawad.DefaultCQRS.Controllers
 {
@@ -27,6 +28,13 @@ namespace AlJawad.DefaultCQRS.Controllers
         protected virtual async Task<Response<TReadModel>> Find(BaseIdentifierFilter<TKey> baseFilter, CancellationToken cancellationToken = default(CancellationToken))
         {
             var command = new EntityIdentifierQuery<TKey, Response<TReadModel>>(Context, baseFilter);
+            var result = await Mediator.Send(command, cancellationToken).ConfigureAwait(false);
+            return result;
+        }
+
+        protected virtual async Task<ActionResult<int>> GetCount(BaseQueryableFilter baseFilter, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var command = new GetCountQuery<ActionResult<int>>(User, baseFilter);
             var result = await Mediator.Send(command, cancellationToken).ConfigureAwait(false);
             return result;
         }
