@@ -38,6 +38,26 @@ namespace AlJawad.DefaultCQRS.CQRS.Handlers
         protected override async Task<Response<int>> ProcessAsync(EntityCountQuery<Response<int>> request, CancellationToken cancellationToken)
         {
             var entityResponse = new Response<int>();
+            //try
+            //{
+            //    IQueryable<TEntity> queryable = base.DataContext.Set<TEntity>().AsQueryable();
+            //    if (request.Filter != null)
+            //    {
+            //        queryable = queryable.Filter(request.Filter);
+            //    }
+
+            //    int data = await queryable.CountAsync(cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
+            //    entityResponse.StatusCode = 200;
+            //    entityResponse.ReturnStatus = true;
+            //    entityResponse.Data = data;
+            //    return entityResponse;
+            //}
+            //catch (Exception ex)
+            //{
+            //    entityResponse.StatusCode = 404;
+            //    entityResponse.ReturnMessage.Add(string.Format("Unable to Get Record from {0}" + ex.Message, typeof(TEntity).Name));
+            //    entityResponse.ReturnStatus = false;
+            //}
             try
             {
                 var query = DataContext.Set<TEntity>().AsQueryable();
@@ -54,7 +74,7 @@ namespace AlJawad.DefaultCQRS.CQRS.Handlers
             catch (Exception ex)
             {
                 entityResponse.StatusCode = StatusCodes.Status404NotFound;
-                entityResponse.ReturnMessage.Add(String.Format("Unable to Get Record from {0}" + 
+                entityResponse.ReturnMessage.Add(String.Format("Unable to Get Record from {0}" +
                     ex.Message, typeof(TEntity).Name));
                 entityResponse.ReturnStatus = false;
             }
