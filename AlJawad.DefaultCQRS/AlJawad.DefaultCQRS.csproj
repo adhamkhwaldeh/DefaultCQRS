@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
@@ -14,21 +14,21 @@
 
 	<ItemGroup>
 		<None Include="README.md" Pack="true" PackagePath="" />
-		<PackageReference Include="AlJawad.SqlDynamicLinker" Version="1.0.7" />
+		<PackageReference Include="AlJawad.SqlDynamicLinker" Version="1.0.8" />
 		
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.0-preview.1.25120.3" />
 
 		<PackageReference Include="DataTables.AspNetCore.Mvc" Version="1.4.2" />
 		
-		<PackageReference Include="MassTransit" Version="8.3.2" />
+		<PackageReference Include="MassTransit" Version="8.3.6" />
 		<PackageReference Include="MediatR" Version="12.4.1" />
 		<PackageReference Include="FluentValidation" Version="11.11.0" />
 
-		<PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="9.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Identity.Core" Version="9.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="10.0.0-preview.1.25080.5" />
+		<PackageReference Include="Microsoft.Extensions.Identity.Core" Version="10.0.0-preview.1.25120.3" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 
-		<PackageReference Include="AutoMapper" Version="13.0.1" />
+		<PackageReference Include="AutoMapper" Version="14.0.0" />
 
 		<!--<PackageReference Include="DataTables.AspNet.AspNetCore" Version="2.0.6" />-->
 
@@ -51,7 +51,7 @@
   </ItemGroup>-->
 
 	<PropertyGroup>
-		<TargetFramework>net9.0</TargetFramework>
+		<TargetFramework>net10.0</TargetFramework>
 		<!-- or netstandard2.1, etc. -->
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<PackageId>AlJawad.DefaultCQRS</PackageId>
